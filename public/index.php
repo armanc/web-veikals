@@ -23,4 +23,24 @@ $app->get('/', function () use ($app) {
     $app->render('base.html.twig', array("active" => "home"));
 })->name('home');
 
+$app->get('/', function () use ($app) {
+    $app->render('info.html.twig', array("active" => "info"));
+})->name('home');
+
+$app->get('/', function () use ($app) {
+    $app->render('contacts.html.twig', array("active" => "contacts"));
+})->name('home');
+
+$app->get('/', function () use ($app) {
+    $app->render('base.html.twig', array("active" => "auctions"));
+})->name('home');
+
+$app->get('/', function () use ($app) {
+    $app->render('base.html.twig', array("active" => "collections"));
+})->name('home');
+
+$app->get('/', function () use ($app) {
+    $app->render('base.html.twig', array("active" => "product"));
+})->name('home');
+
 $app->run();
