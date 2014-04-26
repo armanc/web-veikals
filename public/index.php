@@ -15,32 +15,32 @@ $view->parserExtensions = array(
     new \Slim\Views\TwigExtension(),
 );
 
-/* */
-
-echo 'faffdsfs';
+/* DEFAULT: RUS */
 
 $app->get('/', function () use ($app) {
-    $app->render('base.html.twig', array("active" => "home"));
+    $app->render('pages/index.html.twig', array("active" => "home"));
 })->name('home');
 
-$app->get('/', function () use ($app) {
-    $app->render('info.html.twig', array("active" => "info"));
-})->name('home');
+$app->get('/info', function () use ($app) {
+    $app->render('pages/info.html.twig', array("active" => "info"));
+})->name('info');
 
-$app->get('/', function () use ($app) {
-    $app->render('contacts.html.twig', array("active" => "contacts"));
-})->name('home');
+$app->get('/contacts', function () use ($app) {
+    $app->render('pages/contacts.html.twig', array("active" => "contacts"));
+})->name('contacts');
 
-$app->get('/', function () use ($app) {
-    $app->render('base.html.twig', array("active" => "auctions"));
-})->name('home');
+$app->get('/sale', function () use ($app) {
+    $app->render('pages/sale.html.twig', array("active" => "sale"));
+})->name('sale');
 
-$app->get('/', function () use ($app) {
-    $app->render('base.html.twig', array("active" => "collections"));
-})->name('home');
+$app->get('/collections', function () use ($app) {
+    $app->render('pages/collections.html.twig', array("active" => "collections"));
+})->name('collections');
 
-$app->get('/', function () use ($app) {
-    $app->render('base.html.twig', array("active" => "product"));
-})->name('home');
+$app->get('/product', function () use ($app) {
+    $app->render('pages/product.html.twig', array("active" => "product"));
+})->name('product');
+
+/* ENGLISH VERSION */
 
 $app->run();
