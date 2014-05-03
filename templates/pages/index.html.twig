@@ -4,12 +4,13 @@
 
 {% block content %}
 
-    <div class="titlediv">
-        <div class="container">
-            <h1><strong>Очень важная либо красивая инфа только для стартовой страници</strong></h1>
-        </div>
-    </div>
+
     <header class="my-header container my-container">
+        <div class="titlediv">
+            <div class="container">
+                <h1><strong>Очень важная либо красивая инфа только для стартовой страници</strong></h1>
+            </div>
+        </div>
         <h1>Некая информация о сайте, на каждой странице</h1>
         <p>Описание информации о сайте ну или просто красивый рисунок на фоне :)</p>
         <div class="my-menu">
@@ -52,10 +53,31 @@
 
     <div class="container">
         <div class="row">
-            <div class="">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                
+                    <div class="row">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                            <h3>Акции</h3>
+                            <p>Мы постоянно радуем наших клиентов более приятными ценами.</p>
+                            <a class="btn btn-warning" href="#">Все скидки</a>
+                        </div>               
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                            {% for product in data %}
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 product">
+                                    <img src="img/260x180.gif" alt="yo">
+                                    <h3>{{product.name}}</h3>
+                                    <p>Cena: <b>{{product.price}} EUR</b></p>
+                                    <p>{{product.description}}</p>
+                                </div>
+                            {% endfor %}        
+                        </div>
+                    </div>
+                
             </div>
         </div>
+        <hr>
     </div>
+</div>
 
 {% endblock %}
 
