@@ -1,4 +1,7 @@
 <?php
+session_cache_limiter(false); //palielina sesijas lielumu
+session_start(); // palaizh sesiju
+
 require '../vendor/autoload.php';
 require '../vendor/lib/mysql.php';
 
@@ -21,7 +24,7 @@ $view->parserExtensions = array(
 $app->get('/', function () use ($app) {
     $db = connectdb();
     /*katrs connect ir kaa astevishkjsh pieprasijums */
-    $query = "SELECT * FROM product WHERE price > 50 ORDER BY id ASC LIMIT 3";
+    $query = "SELECT * FROM product WHERE price > 5 ORDER BY id ASC LIMIT 3";
     $result = $db->query($query);
     $data = array();
     while ($row = $result -> fetch_array(MYSQLI_ASSOC)) {
@@ -74,33 +77,50 @@ $app->get('/admin/product/list', function () use ($app) {
         ));
 })->name('list');
 
+
 $app->get('/admin/product/add', function () use ($app) {
-    $app->render('admin/product/list.html.twig', array("active" => "add"));
+    $app->render('admin/product/add.html.twig', array());
 })->name('add');
+$app->post('/admin/product/add', function () use ($app) {
+    addProduct();
+    $app->redirect($app->urlFor('list'));
+});
 
-$app->get('/admin/product/edit', function () use ($app) {
-    $app->render('admin/product/list.html.twig', array("active" => "edit"));
-})->name('edit');
 
-$app->get('/admin/product/delete', function () use ($app) {
+$app->get('/admin/product/delete/:id', function ($id) use ($app) {
+ 
+    
+    if (delProduct($id)) {
+        $app->flash('success','Product deleted!');
+    } else {
+        $app->flash('error','Product delete failed!');
+    }
+
+    $app->redirect($app->urlFor('list'));
+})->name('delete');
+
+
+$app->get('/admin/product/edit/:id', function ($id) use ($app) {
     $db = connectdb();
     /*katrs connect ir kaa astevishkjsh pieprasijums */
-    $query = "SELECT * FROM product ORDER BY id ASC";
+    $query = "SELECT * FROM product WHERE id='$id'";
     $result = $db->query($query);
-    $data = array();
+    $data = null;
     while ($row = $result -> fetch_array(MYSQLI_ASSOC)) {
-        $data[]=$row;
+        $data=$row;
     };
-    $app->render('admin/product/list.html.twig', array(
-        "active" => "delete",
-        "data" => $data
+    /* var_dump($data); */
+    $app->render('admin/product/edit.html.twig', array(
+        "product" => $data
         ));
-})->name('delete');
+})->name('edit');
+$app->post('/admin/product/edit/:id', function ($id) use ($app) {
+    updateProduct($id);
+    $app->redirect($app->urlFor('list',array('id'=>$id)));
+});
 
 $app->get('/admin/product/view', function () use ($app) {
     $app->render('admin/product/list.html.twig', array("active" => "view"));
 })->name('view');
-
-/* ENGLISH VERSION */
 
 $app->run();

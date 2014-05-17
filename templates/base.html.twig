@@ -22,6 +22,14 @@
         {% block navbar %}
             {% include "parts/navbar.html.twig" %}
         {% endblock %}
+        {% block alert %}
+            {% if flash['success'] %}
+                <div class="alert alert-success alert-dismissable">{{ flash['success'] }}</div>              
+            {% endif %}
+            {% if flash['error'] %}
+                <div class="alert alert-danger alert-dismissable">{{ flash['error'] }}</div>
+            {% endif %}
+        {% endblock %}        
         {% block content %}
         {% endblock %}
         {% block footer %}
